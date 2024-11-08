@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List
-from method.recommend import load_model_and_embeddings, recommend_for_new_creator, recommend_for_new_item
-from schemas import CreatorRecommendRequest, ItemRecommendRequest, CreatorRecommendResponse, \
+from rec_system.method.recommend import load_model_and_embeddings, recommend_for_new_creator, recommend_for_new_item
+from rec_system.schemas import CreatorRecommendRequest, ItemRecommendRequest, CreatorRecommendResponse, \
     ItemRecommendResponse
 import torch
 import os
