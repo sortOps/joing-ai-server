@@ -17,7 +17,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto):
         + str(request.proposal_score) + SEP \
         + str(request.additional_features)
     proposal = proposal.replace("\n", "")
-    
+
     # Prompts
     # for evaluation
     evaluation_prompt = EvaluationPrompt

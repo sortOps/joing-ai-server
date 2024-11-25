@@ -27,12 +27,11 @@ def use_optimizer(network, params):
                                     weight_decay=params['l2_regularization'])
     elif params['optimizer'] == 'adam':
         optimizer = torch.optim.Adam(network.parameters(),
-                                                          lr=params['adam_lr'],
-                                                          weight_decay=params['l2_regularization'])
+                                     lr=params['adam_lr'],
+                                     weight_decay=params['l2_regularization'])
     elif params['optimizer'] == 'rmsprop':
         optimizer = torch.optim.RMSprop(network.parameters(),
                                         lr=params['rmsprop_lr'],
                                         alpha=params['rmsprop_alpha'],
                                         momentum=params['rmsprop_momentum'])
     return optimizer
-

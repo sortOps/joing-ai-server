@@ -1,6 +1,4 @@
-
 from config import settings
-import openai
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -32,4 +30,3 @@ def health_check():
         status_code=status.HTTP_200_OK,
         content={"status": "ok", "message": "Service is ready"}
     )
-
