@@ -2,7 +2,7 @@ name: FastAPI CI Pipeline
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "test" ]
 
 jobs:
   quality-and-build:
@@ -51,6 +51,7 @@ jobs:
         fi
         
         echo "Container successfully started ..."
+        docker image ls
 
     # 빌드 결과 알림
     - name: Send Discord Notification - Success
