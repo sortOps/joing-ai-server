@@ -44,3 +44,4 @@ class CreatorRecommendResponse(BaseModel):
 # creator -> item 추천
 class ItemRecommendResponse(BaseModel):
     recommended_items: List[RecommendItem]
+

@@ -12,3 +12,4 @@ class RecommendationService:
 
     def recommend_for_new_creator(self, creator_data):
         return self.recommender.recommend_for_new_creator(creator_data)
+
