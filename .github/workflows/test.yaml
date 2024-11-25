@@ -27,6 +27,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t joing-ai:latest .
+        docker image ls
         
     - name: Verify container starts
       run: |
@@ -51,7 +52,6 @@ jobs:
         fi
         
         echo "Container successfully started ..."
-        docker image ls
 
     # 빌드 결과 알림
     - name: Send Discord Notification - Success
