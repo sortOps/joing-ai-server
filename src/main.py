@@ -3,6 +3,7 @@ import openai
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from starlette import status
 
 # Routers import
 from proposal.router import router as proposal_router
@@ -16,7 +17,7 @@ from .config import settings
 app = FastAPI()
 app.include_router(channel_router)
 app.include_router(proposal_router)
-app.include_router(rec_router)
+# app.include_router(rec_router)
 
 
 @app.get("/")
@@ -27,5 +28,6 @@ def root():
 @app.get("/ready")
 def health_check():
     return JSONResponse(
-        status_code=200, content=None
+        status_code=status.HTTP_200_OK,
+        content={"status": "ok", "message": "Service is ready"}
     )

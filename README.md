@@ -1,5 +1,5 @@
 # Project-Joing-Service-MVP-Dev
-
+# Test commit
 ## Project Structure
 
 ```bash
@@ -23,11 +23,13 @@
 │   │   ├── router.py
 │   │   ├── schemas.py
 │   │   └── service.py
-│   ├── rec_system/
-│   │   └── 채우시오 from Woo
+│   ├── rec_system/ # 보류
+│   │   └── ...
 │   ├── config.py
 │   └── main.py
 ├── .env
 ├── .gitignore
-├── .README.md
-└── requirements.txt
+├── .dockerignore
+├── Dockerfile
+├── requirements.txt
+└── .README.md

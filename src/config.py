@@ -1,5 +1,8 @@
 from typing import Optional
 import boto3
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+import boto3
 from pydantic_settings import BaseSettings
 
 import os
