@@ -1,3 +1,4 @@
+
 from config import settings
 import openai
 
@@ -17,7 +18,7 @@ from .config import settings
 app = FastAPI()
 app.include_router(channel_router)
 app.include_router(proposal_router)
-# app.include_router(rec_router)
+app.include_router(rec_router)
 
 
 @app.get("/")
@@ -31,3 +32,4 @@ def health_check():
         status_code=status.HTTP_200_OK,
         content={"status": "ok", "message": "Service is ready"}
     )
+
