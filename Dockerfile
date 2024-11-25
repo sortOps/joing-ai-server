@@ -13,12 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt \
 
 COPY src /app/src
 
-FROM python:3.12-slim
+FROM python:3.12-alpine
 
 WORKDIR /app
 
 COPY --from=build /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
-COPY --from=build /usr/local/bin/ /usr/local/bin/
 COPY --from=build /app/src /app/src
 
 ENV PYTHONPATH=/app/src \
