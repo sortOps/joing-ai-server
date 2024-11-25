@@ -1,33 +1,31 @@
+from typing import Optional
 import boto3
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 import boto3
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
+import os
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    # comment it when you test it in local
-    # OPENAI_API_KEY: str
-    # model_config = SettingsConfigDict(env_file="../.env")
-    OPENAI_API_KEY: str = None
+    YOUTUBE_API_KEY: Optional[str] = None
     AWS_REGION: str = "ap-northeast-2"
-    PARAMETER_NAME: str = "/joing/ai/openai-key"
+    PARAMETER_NAME_OPENAI: str = "/joing/ai/openai-key"
+    PARAMETER_NAME_YOUTUBE: str = "/joing/ai/youtube-data-key"
 
-    def __init__(self):
-        super().__init__()
-        if not self.OPENAI_API_KEY:
-            self.OPENAI_API_KEY = self.get_parameter_from_aws()
-
-    def get_parameter_from_aws(self) -> str:
+    def get_parameter(self, parameter_name: str) -> str:
         try:
-            ssm = boto3.client('ssm', region_name=self.AWS_REGION)
-            response = ssm.get_parameter(
-                Name=self.PARAMETER_NAME,
-                WithDecryption=True
-            )
-            return response['Parameter']['Value']
+            ssm = boto3.client("ssm", region_name=self.AWS_REGION)
+            response = ssm.get_parameter(Name=parameter_name, WithDecryption=True)
+            return response["Parameter"]["Value"]
         except Exception as e:
-            raise Exception(f"Failed to get OPENAI_API_KEY from AWS Parameter Store: {str(e)}")
+            raise RuntimeError(f"Failed to retrieve '{parameter_name}': {e}")
 
+    def setup_environment(self):
+        os.environ["OPENAI_API_KEY"] = self.get_parameter(self.PARAMETER_NAME_OPENAI)
+        self.YOUTUBE_API_KEY = self.get_parameter(self.PARAMETER_NAME_YOUTUBE)
 
+# Initialize settings and set environment variables
 settings = Settings()
+settings.setup_environment()
