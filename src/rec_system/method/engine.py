@@ -5,13 +5,15 @@ from tensorboardX import SummaryWriter
 from src.rec_system.method.utils import save_checkpoint, use_cpu, use_optimizer
 from src.rec_system.method.metrics import MetronAtK
 
+
 class Engine(object):
     """Meta Engine for training & evaluating NCF model"""
 
     def __init__(self, config):
         self.config = config  # model configuration
         self._metron = MetronAtK(top_k=10)
-        self._writer = SummaryWriter(log_dir='runs/{}'.format(config['alias']))  # tensorboard writer
+        self._writer = SummaryWriter(
+            log_dir='runs/{}'.format(config['alias']))  # tensorboard writer
         self._writer.add_text('config for real learning', str(config), 0)
 
         # Optimizer
@@ -26,7 +28,8 @@ class Engine(object):
 
     def train_single_batch(self, users, items, ratings):
         assert hasattr(self, 'model'), 'Please specify the exact model !'
-        users, items, ratings = users.to(self.device), items.to(self.device), ratings.to(self.device)
+        users, items, ratings = users.to(self.device), items.to(
+            self.device), ratings.to(self.device)
 
         self.opt.zero_grad()
         ratings_pred = self.model(users, items)
@@ -49,13 +52,13 @@ class Engine(object):
         subscribers = subscribers.to(self.device)
 
         self.opt.zero_grad()
-        ratings_pred = self.model(users, items, item_category, media_type, channel_category, subscribers)
+        ratings_pred = self.model(
+            users, items, item_category, media_type, channel_category, subscribers)
         loss = self.crit(ratings_pred.view(-1), ratings)
         loss.backward()
         self.opt.step()
 
         return loss
-
 
     def train_an_epoch(self, train_loader, epoch_id):
         assert hasattr(self, 'model'), 'Please specify the exact model !'
@@ -104,14 +107,16 @@ class Engine(object):
                 positive_items.append(items[positive_mask])
                 positive_item_category.append(item_category[positive_mask])
                 positive_media_type.append(media_type[positive_mask])
-                positive_channel_category.append(channel_category[positive_mask])
+                positive_channel_category.append(
+                    channel_category[positive_mask])
                 positive_subscribers.append(subscribers[positive_mask])
 
                 negative_users.append(users[negative_mask])
                 negative_items.append(items[negative_mask])
                 negative_item_category.append(item_category[negative_mask])
                 negative_media_type.append(media_type[negative_mask])
-                negative_channel_category.append(channel_category[negative_mask])
+                negative_channel_category.append(
+                    channel_category[negative_mask])
                 negative_subscribers.append(subscribers[negative_mask])
 
             # Positive와 Negative를 위한 텐서 결합 및 모델 예측
@@ -152,7 +157,8 @@ class Engine(object):
 
     def save(self, alias, epoch_id, hit_ratio, ndcg):
         assert hasattr(self, 'model'), 'Please specify the exact model !'
-        model_dir = self.config['model_dir'].format(alias, epoch_id, hit_ratio, ndcg)
+        model_dir = self.config['model_dir'].format(
+            alias, epoch_id, hit_ratio, ndcg)
         save_checkpoint(self.model, model_dir)
 
     def prepare_data_for_evaluation(self, train_loader):

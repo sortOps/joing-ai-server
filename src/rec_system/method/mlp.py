@@ -15,15 +15,20 @@ class MLP(torch.nn.Module):
         self.latent_dim = config['latent_dim']
 
         # 사용자 및 아이템 임베딩
-        self.embedding_user = torch.nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.latent_dim)
-        self.embedding_item = torch.nn.Embedding(num_embeddings=self.num_items, embedding_dim=self.latent_dim)
+        self.embedding_user = torch.nn.Embedding(
+            num_embeddings=self.num_users, embedding_dim=self.latent_dim)
+        self.embedding_item = torch.nn.Embedding(
+            num_embeddings=self.num_items, embedding_dim=self.latent_dim)
 
         # 메타데이터 임베딩
-        self.embedding_item_category = torch.nn.Embedding(config['num_item_categories'], config['meta_latent_dim'])
-        self.embedding_media_type = torch.nn.Embedding(2, config['meta_latent_dim'])  # 2: short, long
+        self.embedding_item_category = torch.nn.Embedding(
+            config['num_item_categories'], config['meta_latent_dim'])
+        self.embedding_media_type = torch.nn.Embedding(
+            2, config['meta_latent_dim'])  # 2: short, long
         self.embedding_channel_category = torch.nn.Embedding(config['num_channel_categories'],
                                                              config['meta_latent_dim'])
-        self.embedding_subscribers = torch.nn.Embedding(config['max_subscribers'], config['meta_latent_dim'])
+        self.embedding_subscribers = torch.nn.Embedding(
+            config['max_subscribers'], config['meta_latent_dim'])
 
         # MLP의 FC 레이어
         self.fc_layers = torch.nn.ModuleList()
@@ -31,7 +36,8 @@ class MLP(torch.nn.Module):
             self.fc_layers.append(torch.nn.Linear(in_size, out_size))
 
         # 출력 레이어
-        self.affine_output = torch.nn.Linear(in_features=config['layers'][-1], out_features=1)
+        self.affine_output = torch.nn.Linear(
+            in_features=config['layers'][-1], out_features=1)
         self.logistic = torch.nn.Sigmoid()
 
         # 가중치 초기화 (Gaussian 분포)
@@ -48,7 +54,8 @@ class MLP(torch.nn.Module):
         # 메타데이터 임베딩
         item_category_embedding = self.embedding_item_category(item_category)
         media_type_embedding = self.embedding_media_type(media_type)
-        channel_category_embedding = self.embedding_channel_category(channel_category)
+        channel_category_embedding = self.embedding_channel_category(
+            channel_category)
         subscribers_embedding = self.embedding_subscribers(subscribers)
 
         # 모든 임베딩을 결합
@@ -75,7 +82,8 @@ class MLP(torch.nn.Module):
         # Load GMF pre-trained weights if required
         if config['use_cpu'] is True:
             gmf_model.to(use_cpu())  # Move GMF model to CPU
-        resume_checkpoint(gmf_model, model_dir=config['pretrain_mf'], device_id=config['device_id'])
+        resume_checkpoint(
+            gmf_model, model_dir=config['pretrain_mf'], device_id=config['device_id'])
 
         # Transfer GMF weights to MLP
         self.embedding_user.weight.data = gmf_model.embedding_user.weight.data
@@ -118,7 +126,8 @@ class MLPEngine(Engine):
         self._writer.add_scalar('model/loss', total_loss, epoch_id)
 
     def train_single_batch_mlp(self, users, items, ratings, item_category, media_type, channel_category, subscribers):
-        users, items, ratings = users.to(self.device), items.to(self.device), ratings.to(self.device)
+        users, items, ratings = users.to(self.device), items.to(
+            self.device), ratings.to(self.device)
         item_category, media_type, channel_category, subscribers = (
             item_category.to(self.device),
             media_type.to(self.device),
@@ -127,7 +136,8 @@ class MLPEngine(Engine):
         )
 
         self.opt.zero_grad()
-        ratings_pred = self.model(users, items, item_category, media_type, channel_category, subscribers)
+        ratings_pred = self.model(
+            users, items, item_category, media_type, channel_category, subscribers)
         loss = self.crit(ratings_pred.view(-1), ratings)
         loss.backward()
         self.opt.step()

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class EvaluationPrompt(Enum):
     content_evaluation_prompt = """
         You are a Youtube expert specialized in evaluating a quality of proposal to create a content on Youtube or any social media.
@@ -40,7 +41,7 @@ class EvaluationPrompt(Enum):
         Here is the proposal:
         {proposal}
     """
-    
+
     regulation_evaluation_prompt = """
         You are a social media expert, specialized in detecting inappropriate, harmful or dangerous proposal that can create inappropriate visual contents.
         You are going to evaluate a proposal for a video and here is how you are going to evaluate it.

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class GenerationPrompt(Enum):
     content_feedback_prompt = """
         You are a social media expert, specialized in providing feedback for a video content proposal lack of relevance in the contents.
@@ -47,7 +48,7 @@ class GenerationPrompt(Enum):
         Proposal
         {proposal}
     """
-    
+
     summary_generation_prompt = """
         You are a social media expert, specialized in writing a summary of a proposal.
         You are going write a summary of a proposal that contains title, genre, length, director's note and detail.

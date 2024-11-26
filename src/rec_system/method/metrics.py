@@ -44,11 +44,13 @@ class MetronAtK(object):
         full = pd.merge(full, test, on=['user'], how='left')
 
         # rank the items according to the scores for each user
-        full['rank'] = full.groupby('user')['score'].rank(method='first', ascending=False)
+        full['rank'] = full.groupby('user')['score'].rank(
+            method='first', ascending=False)
         full.sort_values(['user', 'rank'], inplace=True)
 
         # Fix the rank of matched items to always appear at the top
-        full['rank'] = full.apply(lambda row: 1 if row['test_item'] == row['item'] else row['rank'], axis=1)
+        full['rank'] = full.apply(
+            lambda row: 1 if row['test_item'] == row['item'] else row['rank'], axis=1)
 
         self._subjects = full
 
@@ -64,5 +66,6 @@ class MetronAtK(object):
         full, top_k = self._subjects, self._top_k
         top_k = full[full['rank'] <= top_k]
         test_in_top_k = top_k[top_k['test_item'] == top_k['item']].copy()
-        test_in_top_k.loc[:, 'ndcg'] = test_in_top_k['rank'].apply(lambda x: math.log(2) / math.log(1 + x))  # rank starts from 1
+        test_in_top_k.loc[:, 'ndcg'] = test_in_top_k['rank'].apply(
+            lambda x: math.log(2) / math.log(1 + x))  # rank starts from 1
         return test_in_top_k['ndcg'].sum() * 1.0 / full['user'].nunique()

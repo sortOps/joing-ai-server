@@ -21,6 +21,8 @@ class ItemRecommendRequest(BaseModel):
     item_content: str
 
 # 응답(Response) 모델
+
+
 class RecommendCreator(BaseModel):
     creator_id: int
     channel_category: str
@@ -37,6 +39,8 @@ class RecommendItem(BaseModel):
     item_content: str
 
 # item -> creator 추천
+
+
 class CreatorRecommendResponse(BaseModel):
     recommended_creators: List[RecommendCreator]
 
@@ -44,4 +48,3 @@ class CreatorRecommendResponse(BaseModel):
 # creator -> item 추천
 class ItemRecommendResponse(BaseModel):
     recommended_items: List[RecommendItem]
-
