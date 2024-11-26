@@ -10,7 +10,7 @@ from channel.prompts.evaluation_prompt import EvaluationPrompt
 def channel_evaluation(request: ChannelEvaluationRequestDto):
     # Getting Youtube Data API Object
     youtube_data_api = youtube_data_api_request(
-        api_key=settings.YOUTUBE_API_KEY)
+        api_key=settings.YOUTUBE_DATA_API_KEY)
 
     # Getting Channel Info
     channel_response = youtube_channel_request(

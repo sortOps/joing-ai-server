@@ -28,3 +28,5 @@ class Settings(BaseSettings):
         except Exception as e:
             raise RuntimeError(
                 f"Failed to get OPENAI_API_KEY from AWS Parameter Store: {str(e)}")
+
+settings = Settings()
