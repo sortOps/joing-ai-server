@@ -12,6 +12,3 @@ venv/
 .idea/
 .vscode/
 README.md
-
-# Project specific
-src/rec_system/*
