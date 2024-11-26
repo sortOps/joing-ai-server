@@ -7,7 +7,7 @@ from starlette import status
 # Routers import
 from proposal.router import router as proposal_router
 from channel.router import router as channel_router
-from rec_system.router import router as rec_router
+from src.rec_system.router import router as rec_router
 
 # config
 from .config import settings
