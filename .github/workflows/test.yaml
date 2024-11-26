@@ -30,7 +30,10 @@ jobs:
         
     - name: Verify container starts
       run: |
-        docker run -d --name joing-ai-test-container -p 8000:8000 joing-ai:latest
+        docker run -d \
+        --security-opt=no-new-privileges \
+        -v ~/.aws:/root/.aws:ro \
+        --name joing-ai-test-container -p 8000:8000 joing-ai:latest
         # 컨테이너 실행 대기
         sleep 30
 

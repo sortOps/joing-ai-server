@@ -13,6 +13,9 @@ COPY src /app/src
 
 FROM python:3.11-slim
 
+RUN mkdir -p /root/.aws && \
+    chmod 700 /root/.aws
+
 WORKDIR /app
 
 COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
