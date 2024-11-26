@@ -19,16 +19,21 @@ class Settings(BaseSettings):
             self.YOUTUBE_DATA_API_KEY = self.get_parameter_from_aws(
                 self.PARAMETER_NAME_YOUTUBE)
 
-    def get_parameter_from_aws(self, parameter_name) -> str:
+    def get_parameter_from_aws(self, parameter_name: str) -> str:
         try:
             ssm = boto3.client('ssm', region_name=self.AWS_REGION)
             response = ssm.get_parameter(
-                Name=self.parameter_name,
+                Name=parameter_name,
                 WithDecryption=True
             )
             return response['Parameter']['Value']
         except Exception as e:
             raise RuntimeError(
                 f"Failed to get OPENAI_API_KEY from AWS Parameter Store: {str(e)}")
+
+    model_config = {
+        "extra": "allow",
+        "validate_assignment": True
+    }
 
 settings = Settings()
