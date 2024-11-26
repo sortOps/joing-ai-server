@@ -3,8 +3,9 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    OPENAI_API_KEY: str = None
-    YOUTUBE_DATA_API_KEY: str = None
+    OPENAI_API_KEY: Optional[str] = None
+    YOUTUBE_DATA_API_KEY: Optional[str] = None
+
     AWS_REGION: str = "ap-northeast-2"
     PARAMETER_NAME_OPENAI: str = "/joing/ai/openai-key"
     PARAMETER_NAME_YOUTUBE: str = "/joing/ai/youtube-data-key"
