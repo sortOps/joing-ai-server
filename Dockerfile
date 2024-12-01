@@ -15,10 +15,17 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Create docker config directory first
+RUN mkdir -p /kaniko/.docker && \
+    echo '{"auths":{}}' > /kaniko/.docker/config.json && \
+    chmod 600 /kaniko/.docker/config.json
+
 COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
 COPY --from=build /app/src /app/src
 
+ENV NODE_ENV=production
+ENV DOCKER_CONFIG=/kaniko/.docker
 ENV PYTHONPATH=/app/src \
     AWS_REGION=ap-northeast-2 \
     PORT=8000
