@@ -13,4 +13,4 @@ spec:
     spec:
       containers:
         - name: krampoline
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_709cc61ad5bf
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_48948ca17a0b:latest
