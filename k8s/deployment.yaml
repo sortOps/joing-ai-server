@@ -13,15 +13,15 @@ spec:
     spec:
       containers:
         - name: krampoline
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_48948ca17a0b:latest
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_fd34980ba039:latest
 		  env:
           - name: OPENAI_API_KEY
             valueFrom:
               secretKeyRef:
                 name: api-keys
                 key: OPENAI_API_KEY
-          - name: YOUTUBE_DATA_KEY
+          - name: YOUTUBE_DATA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: api-keys
-                key: YOUTUBE_DATA_KEY
+                key: YOUTUBE_DATA_API_KEY

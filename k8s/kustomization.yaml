@@ -7,4 +7,4 @@ secretGenerator:
 - name: api-keys
   files:
   - OPENAI_API_KEY=api-keys/openai-key.txt
-  - YOUTUBE_DATA_KEY=api-keys/youtube-key.txt
+  - YOUTUBE_DATA_API_KEY=api-keys/youtube-key.txt
