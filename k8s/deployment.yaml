@@ -14,7 +14,7 @@ spec:
       containers:
         - name: krampoline
           image: krmp-d2hub-idock.9rum.cc/dev-test/repo_fd34980ba039:latest
-		  env:
+          env:
           - name: OPENAI_API_KEY
             valueFrom:
               secretKeyRef:
