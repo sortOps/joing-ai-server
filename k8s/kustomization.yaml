@@ -1,4 +1,4 @@
-namespace: krampoline
+namespace: ask29961-namespace
 resources:
   - deployment.yaml
   - service.yaml
